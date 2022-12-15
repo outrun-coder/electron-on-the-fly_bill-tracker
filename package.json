@@ -1,0 +1,24 @@
+{
+  "name": "bill-tracker",
+  "version": "0.0.1",
+  "description": "Crash course on electron",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker.git"
+  },
+  "keywords": [
+    "electron",
+    "node",
+    "svelte"
+  ],
+  "author": "David Pineda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker/issues"
+  },
+  "homepage": "https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker#readme"
+}
