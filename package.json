@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker/issues"
   },
-  "homepage": "https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker#readme"
+  "homepage": "https://github.com/thisDaemonDave/electron-on-the-fly_bill-tracker#readme",
+  "devDependencies": {
+    "electron": "^22.0.0"
+  }
 }
