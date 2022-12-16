@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, desktopCapturer, ipcMain, Menu } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -6,13 +6,18 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+let mainWindow = null;
+
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
     },
   });
 
@@ -47,3 +52,26 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+ipcMain.on("vid-sources:collect", async(e, value) => {
+  console.log('>> HIT COLLECT VID-SOURCES', value);
+  const inputSources = await desktopCapturer.getSources({
+    types: ['window', 'screen']
+  });
+
+  // console.log('>> INPUT_SOURCES:', inputSources);
+  const possibleSourceSelections = inputSources.map(source => {
+    console.log('>> label:', source.name);
+    return {
+      label: source.name,
+      click: () => console.log(`>> ${source.name} CLICKED!`) // TODO selectSource(source)
+    }
+  });
+
+  // x Bad attempt to access the Menu module from the render side
+  // mainWindow.webContents.send('vid-sources:ready', inputSources);
+
+  const videoOptionsMenu = Menu.buildFromTemplate(possibleSourceSelections);
+
+  videoOptionsMenu.popup(mainWindow.webContents);
+})
